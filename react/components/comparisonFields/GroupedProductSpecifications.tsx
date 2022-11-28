@@ -7,18 +7,26 @@ import ComparisonProductContext from '../../ComparisonProductContext'
 import ComparisonContext from '../../ProductComparisonContext'
 import { splitString } from '../utils/fieldUtils'
 import './fieldGroup.css'
+import { ExtensionPoint } from 'vtex.render-runtime'
 
-const CSS_HANDLES = ['title']
+const CSS_HANDLES = [
+  'title',
+  'specificationGroup',
+  'verticalSpecificationGroup',
+]
 
 interface Props {
   showGroupName: boolean
   productSpecificationsToHide?: string
   productSpecificationGroupsToHide?: string
+  showSpecNameWithSpecValue: boolean
 }
 
 const GroupedProductSpecifications = ({
   productSpecificationsToHide,
   productSpecificationGroupsToHide,
+  showGroupName = true,
+  showSpecNameWithSpecValue = false,
 }: Props) => {
   const cssHandles = useCssHandles(CSS_HANDLES)
   const { useComparisonProductState } = ComparisonProductContext
@@ -35,7 +43,7 @@ const GroupedProductSpecifications = ({
 
   const allProductSpecificationsList: GroupedComparisonFields = useMemo(() => {
     const allProductSpecificationGroups: ProductSpecificationGroup[][] = products.map(
-      (product) => {
+      product => {
         return pathOr([], ['specificationGroups'], product)
       }
     )
@@ -197,13 +205,35 @@ const GroupedProductSpecifications = ({
 
       return (
         specifications.length > 0 && (
-          <div key={groupName} className="mt3">
-            <div className={`${cssHandles.title} pa5 b`}>
-              <span>{groupName}</span>
-            </div>
+          <div
+            key={groupName}
+            className={`mt3 ${cssHandles.specificationGroup} ${
+              showSpecNameWithSpecValue
+                ? cssHandles.verticalSpecificationGroup
+                : ' '
+            }`}
+          >
+            {showGroupName && (
+              <>
+                {showSpecNameWithSpecValue ? (
+                  <ExtensionPoint
+                    id="list-context.comparison-row"
+                    groupName={groupName}
+                  />
+                ) : (
+                  <div className={`${cssHandles.title} pa5 b`}>
+                    <span>{groupName}</span>
+                  </div>
+                )}
+              </>
+            )}
             <div>
               {specifications.map((field: ComparisonField) => (
-                <ComparisonFieldRow key={`field-${field.name}`} field={field} />
+                <ComparisonFieldRow
+                  key={`field-${field.name}`}
+                  field={field}
+                  showSpecNameWithSpecValue={showSpecNameWithSpecValue}
+                />
               ))}
             </div>
           </div>

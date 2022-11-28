@@ -29,7 +29,7 @@ const ProductSpecifications = ({
 
   const allProductSpecificationsList: ComparisonField[] = useMemo(() => {
     const allProductSpecificationsList: ProductSpecification[][] = products.map(
-      (product) => {
+      product => {
         const groups = pathOr([], ['specificationGroups'], product)
         const allSpecifications = findLast(propEq('name', 'allSpecifications'))(
           groups
@@ -41,7 +41,7 @@ const ProductSpecifications = ({
 
     let specificationsList: string[] = allProductSpecificationsList.reduce(
       (accumulator: string[], currentValue: ProductSpecification[]) => {
-        const current = currentValue.map((specification) =>
+        const current = currentValue.map(specification =>
           pathOr('', ['name'], specification)
         )
 
@@ -56,7 +56,7 @@ const ProductSpecifications = ({
     )
 
     const productSpecificationFields = specificationsList.map(
-      (specificationName) => ({
+      specificationName => ({
         fieldType: 'ProductSpecificationField',
         name: specificationName,
         displayValue: specificationName,
@@ -65,9 +65,9 @@ const ProductSpecifications = ({
     )
 
     if (comparisonData.showDifferences) {
-      return productSpecificationFields.map((field) => {
+      return productSpecificationFields.map(field => {
         const specifications = allProductSpecificationsList.map(
-          (specifications) => {
+          specifications => {
             return findLast(propEq('name', field.name))(specifications)
           }
         )

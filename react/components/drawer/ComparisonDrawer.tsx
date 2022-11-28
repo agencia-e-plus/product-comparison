@@ -67,10 +67,11 @@ const messages = defineMessages({
 
 interface Props extends InjectedIntlProps {
   showToast?: (input: ToastInput) => void
-  comparisonPageUrl?: string
+  comparisonPageUrl?: string,
+  showIfEmpty: boolean
 }
 
-const ComparisonDrawer = ({ showToast, intl, comparisonPageUrl }: Props) => {
+const ComparisonDrawer = ({ showToast, intl, comparisonPageUrl, showIfEmpty }: Props) => {
   const cssHandles = useCssHandles(CSS_HANDLES)
   const { navigate } = useRuntime()
   // const [isCollapsed, setCollapsed] = useState(false)
@@ -139,7 +140,7 @@ const ComparisonDrawer = ({ showToast, intl, comparisonPageUrl }: Props) => {
     navigate({ to: url })
   }
 
-  return isEmpty(comparisonProducts) ? (
+  return !showIfEmpty && isEmpty(comparisonProducts) ? (
     <div />
   ) : (
     <div
@@ -155,7 +156,8 @@ const ComparisonDrawer = ({ showToast, intl, comparisonPageUrl }: Props) => {
                 <span className={`fw5 black  ${cssHandles.drawerTitleInnerContainer}`}>
                   <span>{intl.formatMessage(messages.compare)} </span>{' '}
                   <span>{comparisonProducts.length}</span>{' '}
-                  <span>{intl.formatMessage(messages.products, { productsLength: comparisonProducts.length })}</span>
+                  <span>{intl.formatMessage(messages.products, { productsLength: comparisonProducts.length })}
+                  </span>
                 </span>
               </div>
               <div className="flex-grow-1" />

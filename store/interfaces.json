@@ -57,5 +57,13 @@
 
   "product-summary.shelf.product-comparison": {
     "allowed": ["product-comparison-block"]
+  },
+
+  "product-comparison-remove-all": {
+    "component": "RemoveAllButton"
+  },
+
+  "product-comparison-back-button": {
+    "component": "BackButton"
   }
 }
