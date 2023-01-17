@@ -41,6 +41,7 @@ const RemoveButton = ({ showToast, intl }: Props) => {
   const productId = pathOr('', ['product', 'productId'], valuesFromContext)
   const productName = pathOr('', ['product', 'productName'], valuesFromContext)
   const itemId = pathOr('', ['selectedItem', 'itemId'], valuesFromContext)
+  const link = pathOr('', ['product', 'itemId'], valuesFromContext)
 
   const comparisonData = useProductComparisonState()
   const isDrawerCollapsed = pathOr(false, ['isDrawerCollapsed'], comparisonData)
@@ -62,6 +63,7 @@ const RemoveButton = ({ showToast, intl }: Props) => {
         product: {
           productId,
           skuId: itemId,
+          link
         },
       },
       type: 'REMOVE',

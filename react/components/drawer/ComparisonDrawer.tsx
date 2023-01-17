@@ -10,12 +10,14 @@ import { injectIntl, defineMessages } from 'react-intl'
 
 import ComparisonContext from '../../ProductComparisonContext'
 import './drawer.css'
+import { usePixel } from 'vtex.pixel-manager'
 
 const CSS_HANDLES = [
   'drawerContainer',
   'expandCollapseButton',
   'comparisonButtons',
   'compareProductsButton',
+  'compareProductsButtonNotMinProduct',
   'drawer',
   'compareProductButtonWrapper',
   'removeAllWrapper',
@@ -38,6 +40,10 @@ const messages = defineMessages({
   compare: {
     defaultMessage: '',
     id: 'store/product-comparison.drawer.compare',
+  },
+  compareCTA: {
+    defaultMessage: '',
+    id: 'store/product-comparison.drawer.compare-cta'
   },
   removeAllMessage: {
     defaultMessage: '',
@@ -83,6 +89,10 @@ const ComparisonDrawer = ({ showToast, intl, comparisonPageUrl, showIfEmpty }: P
   const comparisonData = useProductComparisonState()
   const dispatchComparison = useProductComparisonDispatch()
 
+  const { push } = usePixel()
+
+
+  
   const comparisonProducts = pathOr(
     [] as ProductToCompare[],
     ['products'],
@@ -118,6 +128,10 @@ const ComparisonDrawer = ({ showToast, intl, comparisonPageUrl, showIfEmpty }: P
   const onClickCompare = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!comparisonProducts || comparisonProducts.length < 2) {
       showMessage(intl.formatMessage(messages.minItemsMessage))
+      push({
+        id: 'few-products'
+      })
+    
       e.preventDefault()
       e.stopPropagation()
     } else if (comparisonProducts.length > 10) {
@@ -126,6 +140,9 @@ const ComparisonDrawer = ({ showToast, intl, comparisonPageUrl, showIfEmpty }: P
           messages.maxItemsMessage1
         )} ${10} ${intl.formatMessage(messages.maxItemsMessage2)}`
       )
+      push({
+        id: 'much-products'
+      })
       e.preventDefault()
       e.stopPropagation()
     }
@@ -143,6 +160,7 @@ const ComparisonDrawer = ({ showToast, intl, comparisonPageUrl, showIfEmpty }: P
   return !showIfEmpty && isEmpty(comparisonProducts) ? (
     <div />
   ) : (
+    <>
     <div
       className={`${cssHandles.drawerContainer} ${isCollapsed ? cssHandles.drawerClosed : cssHandles.drawerOpened} bg-white w-100 bt-ns b--light-gray flex justify-center`}
     >
@@ -184,16 +202,17 @@ const ComparisonDrawer = ({ showToast, intl, comparisonPageUrl, showIfEmpty }: P
                 </Button>
               </div>
               <div
-                className={`flex mr2 ml2 ${cssHandles.compareProductButtonWrapper}`}
-                onClick={onClickCompare}
+                className={`flex mr2 ml2 ${cssHandles.compareProductButtonWrapper} ${comparisonProducts.length < 2 ? cssHandles.compareProductsButtonNotMinProduct : ' '}`}
+                onClick={!comparisonProducts.length ? () => {}  : onClickCompare}
               >
                 <Button
                   block
                   size="small"
-                  className={`${cssHandles.compareProductsButton} ma3`}
+                  className={`${cssHandles.compareProductsButton} ma3 `}
                   onClick={navigateToComparisonPage}
+                  disabled={Boolean(comparisonProducts.length)}
                 >
-                  {intl.formatMessage(messages.compare)}
+                  {intl.formatMessage(messages.compareCTA)}
                 </Button>
               </div>
             </div>
@@ -207,7 +226,10 @@ const ComparisonDrawer = ({ showToast, intl, comparisonPageUrl, showIfEmpty }: P
           </div>
         </Collapsible>
       </div>
+      
     </div>
+    <div> </div>
+    </>
   )
 }
 

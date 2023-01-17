@@ -10,6 +10,7 @@ import { injectIntl, defineMessages } from 'react-intl'
 import { useProduct } from 'vtex.product-context'
 
 import ComparisonContext from '../../ProductComparisonContext'
+import { usePixel } from 'vtex.pixel-manager'
 
 const CSS_HANDLES = ['productSelectorContainer']
 
@@ -47,14 +48,15 @@ const getContextValue = (
     let productId = pathOr('', ['product', 'productId'], contextValue)
     let productName = pathOr('', ['product', 'productName'], contextValue)
     let itemId = pathOr('', ['selectedItem', 'itemId'], contextValue)
-    return { productName, productId, itemId }
+    let link = pathOr('', ['product', 'link'], contextValue)
+    return { productName, productId, itemId, link }
 }
 const ProductSelector = ({ showToast, intl }: Props) => {
   const cssHandles = useCssHandles(CSS_HANDLES)
   const [isChecked, setIsChecked] = useState(false)
   const valuesFromContext = useProductSummary()
   const valuesFromProductContext = useProduct()
-  const {productId, productName, itemId} = getContextValue(
+  const {productId, productName, itemId, link  } = getContextValue(
     valuesFromProductContext,
     valuesFromContext
   )
@@ -65,6 +67,9 @@ const ProductSelector = ({ showToast, intl }: Props) => {
 
   const comparisonData = useProductComparisonState()
   const dispatchComparison = useProductComparisonDispatch()
+  const { push } = usePixel()
+
+  console.log(link)
 
 
   const isDrawerCollapsed = pathOr(false, ['isDrawerCollapsed'], comparisonData)
@@ -97,11 +102,14 @@ const ProductSelector = ({ showToast, intl }: Props) => {
   const productSelectorChanged = (e: { target: { checked: boolean } }) => {
     if (e.target.checked && productsSelected.length === maxItemsToCompare) {
       setIsChecked(false)
+      push({
+        id: 'much-products'
+      })
       showMessage(`${intl.formatMessage(messages.comparisonUpperLimit)}`, true)
     } else if (e.target.checked) {
       dispatchComparison({
         args: {
-          product: { productId, skuId: itemId },
+          product: { productId, skuId: itemId , link},
         },
         type: 'ADD',
       })
@@ -114,7 +122,7 @@ const ProductSelector = ({ showToast, intl }: Props) => {
     } else {
       dispatchComparison({
         args: {
-          product: { productId, skuId: itemId },
+          product: { productId, skuId: itemId, link},
         },
         type: 'REMOVE',
       })
@@ -127,7 +135,10 @@ const ProductSelector = ({ showToast, intl }: Props) => {
     }
   }
 
+
   const productSelectionOnClicked = (e: MouseEvent) => {
+
+    
     e.preventDefault()
     e.stopPropagation()
   }

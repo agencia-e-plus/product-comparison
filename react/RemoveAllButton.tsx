@@ -1,7 +1,7 @@
 import React from 'react'
 import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl'
 import { useCssHandles } from 'vtex.css-handles'
-import { Button } from 'vtex.styleguide'
+import { Button, withToast } from 'vtex.styleguide'
 
 import ComparisonContext from './ProductComparisonContext'
 
@@ -34,20 +34,30 @@ const messages = defineMessages({
   },
 })
 
-interface Props extends InjectedIntlProps {}
+interface Props extends InjectedIntlProps {
+  showToast?: (input: ToastInput) => void
+}
 
-const RemoveAllButton: React.FC<Props> = ({ intl }) => {
+const RemoveAllButton: React.FC<Props> = ({ intl, showToast }) => {
   const cssHandles = useCssHandles(CSS_HANDLES)
 
   const { useProductComparisonDispatch } = ComparisonContext
 
   const dispatchComparison = useProductComparisonDispatch()
 
+  const showMessage = (message: string) => {
+    if (showToast) {
+      showToast({
+        message,
+      })
+    }
+  }
+
   const removeAllItems = () => {
     dispatchComparison({
       type: 'REMOVE_ALL',
     })
-    // showMessage(intl.formatMessage(messages.removeAllMessage))
+    showMessage(intl.formatMessage(messages.removeAllMessage))
     window.history.back()
   }
 
@@ -60,4 +70,4 @@ const RemoveAllButton: React.FC<Props> = ({ intl }) => {
   )
 }
 
-export default injectIntl(RemoveAllButton)
+export default withToast(injectIntl(RemoveAllButton))

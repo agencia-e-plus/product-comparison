@@ -31,6 +31,7 @@
   "store/product-comparison.product-selector.compare": "Confronta",
   "store/product-comparison.drawer.products": "Prodotti",
   "store/product-comparison.drawer.compare": "Confronta",
+  "store/product-comparison.drawer.compare-cta": "Confronta",
   "store/product-comparison.drawer.remove-all-message": "Tutti i prodotti sono stati rimossi dal confronto",
   "store/product-comparison.drawer.remove-all": "Rimuovi tutti",
   "store/product-comparison.drawer.hide": "nascondi",

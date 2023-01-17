@@ -9,6 +9,10 @@
     "component": "ProductSelector"
   },
 
+  "product-comparison-block.link": {
+    "component": "ProductLink"
+  },
+
   "product-comparison-drawer": {
     "allowed": ["list-context.comparison-product-summary-slider"],
     "component": "ComparisonDrawer"
