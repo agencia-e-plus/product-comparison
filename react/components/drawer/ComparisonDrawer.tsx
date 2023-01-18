@@ -210,7 +210,7 @@ const ComparisonDrawer = ({ showToast, intl, comparisonPageUrl, showIfEmpty }: P
                   size="small"
                   className={`${cssHandles.compareProductsButton} ma3 `}
                   onClick={navigateToComparisonPage}
-                  disabled={Boolean(comparisonProducts.length)}
+                  disabled={!comparisonProducts.length}
                 >
                   {intl.formatMessage(messages.compareCTA)}
                 </Button>
