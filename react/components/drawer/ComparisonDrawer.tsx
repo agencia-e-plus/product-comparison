@@ -228,7 +228,6 @@ const ComparisonDrawer = ({ showToast, intl, comparisonPageUrl, showIfEmpty }: P
       </div>
       
     </div>
-    <div> </div>
     </>
   )
 }
