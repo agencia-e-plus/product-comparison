@@ -6,6 +6,7 @@ import ComparisonFieldRow from '../comparisonPageRow/ComparisonFieldRow'
 import ComparisonProductContext from '../../ComparisonProductContext'
 import ComparisonContext from '../../ProductComparisonContext'
 import { splitString } from '../utils/fieldUtils'
+
 import './fieldGroup.css'
 import { ExtensionPoint } from 'vtex.render-runtime'
 
@@ -42,11 +43,10 @@ const GroupedProductSpecifications = ({
   )
 
   const allProductSpecificationsList: GroupedComparisonFields = useMemo(() => {
-    const allProductSpecificationGroups: ProductSpecificationGroup[][] = products.map(
-      product => {
+    const allProductSpecificationGroups: ProductSpecificationGroup[][] =
+      products.map((product) => {
         return pathOr([], ['specificationGroups'], product)
-      }
-    )
+      })
 
     const groupedSpecifications = allProductSpecificationGroups.reduce(
       (

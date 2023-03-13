@@ -54,10 +54,8 @@ const ProductSummaryRow = ({
   )
 
   const [showDifferences, setShowDifferences] = useState(false)
-  const {
-    useProductComparisonState,
-    useProductComparisonDispatch,
-  } = ComparisonContext
+  const { useProductComparisonState, useProductComparisonDispatch } =
+    ComparisonContext
 
   const { useComparisonProductState } = ComparisonProductContext
 

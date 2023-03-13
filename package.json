@@ -13,7 +13,6 @@
   },
   "lint-staged": {
     "*.{ts,js,tsx,jsx}": [
-      "eslint --fix",
       "prettier --write"
     ],
     "*.{json,graphql,gql}": [
@@ -21,13 +20,13 @@
     ]
   },
   "devDependencies": {
-    "@vtex/prettier-config": "^0.1.4",
-    "eslint": "^7.12.1",
-    "eslint-config-vtex": "^12.3.2",
-    "eslint-config-vtex-react": "^6.3.2",
+    "@vtex/prettier-config": "^0.3.1",
+    "eslint": "^7.9.0",
+    "eslint-config-vtex": "^12.8.6",
+    "eslint-config-vtex-react": "^6.7.8",
     "husky": "^4.2.3",
     "lint-staged": "^10.1.1",
-    "prettier": "^2.0.2",
+    "prettier": "^2.1.2",
     "typescript": "^3.8.3"
   }
 }

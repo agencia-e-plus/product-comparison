@@ -9,6 +9,7 @@ import type { InjectedIntlProps } from 'react-intl'
 import { injectIntl, defineMessages } from 'react-intl'
 
 import ComparisonContext from '../../ProductComparisonContext'
+
 import './drawer.css'
 import { usePixel } from 'vtex.pixel-manager'
 
@@ -25,7 +26,7 @@ const CSS_HANDLES = [
   'drawerTitleOuterContainer',
   'drawerTitleInnerContainer',
   'drawerOpened',
-  'drawerClosed'
+  'drawerClosed',
 ]
 
 const messages = defineMessages({
@@ -43,7 +44,7 @@ const messages = defineMessages({
   },
   compareCTA: {
     defaultMessage: '',
-    id: 'store/product-comparison.drawer.compare-cta'
+    id: 'store/product-comparison.drawer.compare-cta',
   },
   removeAllMessage: {
     defaultMessage: '',
@@ -73,26 +74,27 @@ const messages = defineMessages({
 
 interface Props extends InjectedIntlProps {
   showToast?: (input: ToastInput) => void
-  comparisonPageUrl?: string,
+  comparisonPageUrl?: string
   showIfEmpty: boolean
 }
 
-const ComparisonDrawer = ({ showToast, intl, comparisonPageUrl, showIfEmpty }: Props) => {
+const ComparisonDrawer = ({
+  showToast,
+  intl,
+  comparisonPageUrl,
+  showIfEmpty,
+}: Props) => {
   const cssHandles = useCssHandles(CSS_HANDLES)
   const { navigate } = useRuntime()
   // const [isCollapsed, setCollapsed] = useState(false)
-  const {
-    useProductComparisonState,
-    useProductComparisonDispatch,
-  } = ComparisonContext
+  const { useProductComparisonState, useProductComparisonDispatch } =
+    ComparisonContext
 
   const comparisonData = useProductComparisonState()
   const dispatchComparison = useProductComparisonDispatch()
 
   const { push } = usePixel()
 
-
-  
   const comparisonProducts = pathOr(
     [] as ProductToCompare[],
     ['products'],
@@ -129,9 +131,9 @@ const ComparisonDrawer = ({ showToast, intl, comparisonPageUrl, showIfEmpty }: P
     if (!comparisonProducts || comparisonProducts.length < 2) {
       showMessage(intl.formatMessage(messages.minItemsMessage))
       push({
-        id: 'few-products'
+        id: 'few-products',
       })
-    
+
       e.preventDefault()
       e.stopPropagation()
     } else if (comparisonProducts.length > 10) {
@@ -141,7 +143,7 @@ const ComparisonDrawer = ({ showToast, intl, comparisonPageUrl, showIfEmpty }: P
         )} ${10} ${intl.formatMessage(messages.maxItemsMessage2)}`
       )
       push({
-        id: 'much-products'
+        id: 'much-products',
       })
       e.preventDefault()
       e.stopPropagation()
@@ -161,73 +163,89 @@ const ComparisonDrawer = ({ showToast, intl, comparisonPageUrl, showIfEmpty }: P
     <div />
   ) : (
     <>
-    <div
-      className={`${cssHandles.drawerContainer} ${isCollapsed ? cssHandles.drawerClosed : cssHandles.drawerOpened} bg-white w-100 bt-ns b--light-gray flex justify-center`}
-    >
-      <div className="mw9 w-100 ">
-        <Collapsible
-          header={
-            <div
-              className={`${cssHandles.comparisonButtons} flex flex-row ma3`}
-            >
-              <div className={`flex items-center-ns mr2 ml2  ${cssHandles.drawerTitleOuterContainer}`}>
-                <span className={`fw5 black  ${cssHandles.drawerTitleInnerContainer}`}>
-                  <span>{intl.formatMessage(messages.compare)} </span>{' '}
-                  <span>{comparisonProducts.length}</span>{' '}
-                  <span>{intl.formatMessage(messages.products, { productsLength: comparisonProducts.length })}
-                  </span>
-                </span>
-              </div>
-              <div className="flex-grow-1" />
-              <div className="flex mr2 ml2">
-                <button
-                  onClick={onExpandCollapse}
-                  className={`${cssHandles.expandCollapseButton} bg-transparent bn-ns t-small c-action-primary hover-c-action-primary pointer`}
-                >
-                  <span className={cssHandles.hideOrShowText}>
-                    {!isCollapsed
-                      ? intl.formatMessage(messages.hide)
-                      : intl.formatMessage(messages.show)}
-                  </span>
-                </button>
-              </div>
-              <div className={`flex mr2 ml2 ${cssHandles.removeAllWrapper}`}>
-                <Button
-                  block
-                  variation="danger-tertiary"
-                  size="small"
-                  onClick={removeAllItems}
-                >
-                  {intl.formatMessage(messages.removeAll)}
-                </Button>
-              </div>
+      <div
+        className={`${cssHandles.drawerContainer} ${
+          isCollapsed ? cssHandles.drawerClosed : cssHandles.drawerOpened
+        } bg-white w-100 bt-ns b--light-gray flex justify-center`}
+      >
+        <div className="mw9 w-100 ">
+          <Collapsible
+            header={
               <div
-                className={`flex mr2 ml2 ${cssHandles.compareProductButtonWrapper} ${comparisonProducts.length < 2 ? cssHandles.compareProductsButtonNotMinProduct : ' '}`}
-                onClick={!comparisonProducts.length ? () => {}  : onClickCompare}
+                className={`${cssHandles.comparisonButtons} flex flex-row ma3`}
               >
-                <Button
-                  block
-                  size="small"
-                  className={`${cssHandles.compareProductsButton} ma3 `}
-                  onClick={navigateToComparisonPage}
-                  disabled={!comparisonProducts.length}
+                <div
+                  className={`flex items-center-ns mr2 ml2  ${cssHandles.drawerTitleOuterContainer}`}
                 >
-                  {intl.formatMessage(messages.compareCTA)}
-                </Button>
+                  <span
+                    className={`fw5 black  ${cssHandles.drawerTitleInnerContainer}`}
+                  >
+                    <span>{intl.formatMessage(messages.compare)} </span>{' '}
+                    <span>{comparisonProducts.length}</span>{' '}
+                    <span>
+                      {intl.formatMessage(messages.products, {
+                        productsLength: comparisonProducts.length,
+                      })}
+                    </span>
+                  </span>
+                </div>
+                <div className="flex-grow-1" />
+                <div className="flex mr2 ml2">
+                  <button
+                    onClick={onExpandCollapse}
+                    className={`${cssHandles.expandCollapseButton} bg-transparent bn-ns t-small c-action-primary hover-c-action-primary pointer`}
+                  >
+                    <span className={cssHandles.hideOrShowText}>
+                      {!isCollapsed
+                        ? intl.formatMessage(messages.hide)
+                        : intl.formatMessage(messages.show)}
+                    </span>
+                  </button>
+                </div>
+                <div className={`flex mr2 ml2 ${cssHandles.removeAllWrapper}`}>
+                  <Button
+                    block
+                    variation="danger-tertiary"
+                    size="small"
+                    onClick={removeAllItems}
+                  >
+                    {intl.formatMessage(messages.removeAll)}
+                  </Button>
+                </div>
+                <div
+                  className={`flex mr2 ml2 ${
+                    cssHandles.compareProductButtonWrapper
+                  } ${
+                    comparisonProducts.length < 2
+                      ? cssHandles.compareProductsButtonNotMinProduct
+                      : ' '
+                  }`}
+                  onClick={
+                    !comparisonProducts.length ? () => {} : onClickCompare
+                  }
+                >
+                  <Button
+                    block
+                    size="small"
+                    className={`${cssHandles.compareProductsButton} ma3 `}
+                    onClick={navigateToComparisonPage}
+                    disabled={!comparisonProducts.length}
+                  >
+                    {intl.formatMessage(messages.compareCTA)}
+                  </Button>
+                </div>
               </div>
-            </div>
-          }
-          isOpen={!isCollapsed}
-        >
-          <div
-            className={`${cssHandles.drawer} flex flex-row justify-center pl3 pr3`}
+            }
+            isOpen={!isCollapsed}
           >
-            <ExtensionPoint id="list-context.comparison-product-summary-slider" />
-          </div>
-        </Collapsible>
+            <div
+              className={`${cssHandles.drawer} flex flex-row justify-center pl3 pr3`}
+            >
+              <ExtensionPoint id="list-context.comparison-product-summary-slider" />
+            </div>
+          </Collapsible>
+        </div>
       </div>
-      
-    </div>
     </>
   )
 }

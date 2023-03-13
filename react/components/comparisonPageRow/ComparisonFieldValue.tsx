@@ -66,7 +66,7 @@ const ComparisonFieldValue = ({ field, productToCompare }: Props) => {
       <div
         className={`${cssHandles.productSpecificationValues} flex flex-column`}
       >
-        {values.map(value => {
+        {values.map((value) => {
           return (
             <span
               className={`${cssHandles.productSpecificationValue}`}
@@ -90,7 +90,7 @@ const ComparisonFieldValue = ({ field, productToCompare }: Props) => {
 
     return (
       <div className={`${cssHandles.skuSpecificationValues} flex flex-column`}>
-        {values.map(value => {
+        {values.map((value) => {
           return (
             <span
               className={`${cssHandles.skuSpecificationValue}`}
@@ -122,7 +122,7 @@ const ComparisonFieldValue = ({ field, productToCompare }: Props) => {
       <div
         className={`${cssHandles.productSpecificationValues} flex flex-column`}
       >
-        {values.map(value => {
+        {values.map((value) => {
           return (
             <span
               className={`${cssHandles.productSpecificationValue}`}

@@ -1,5 +1,6 @@
 import React from 'react'
-import { defineMessages, InjectedIntlProps, injectIntl } from 'react-intl'
+import type { InjectedIntlProps } from 'react-intl'
+import { defineMessages, injectIntl } from 'react-intl'
 import { useCssHandles } from 'vtex.css-handles'
 import { Button, withToast } from 'vtex.styleguide'
 
