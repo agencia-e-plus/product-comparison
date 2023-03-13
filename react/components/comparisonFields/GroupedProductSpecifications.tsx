@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { contains, pathOr, keys, findLast, propEq, sort, uniq } from 'ramda' // , findLast, propEq, sort, uniq,
 import { useCssHandles } from 'vtex.css-handles'
+import { ExtensionPoint } from 'vtex.render-runtime'
 
 import ComparisonFieldRow from '../comparisonPageRow/ComparisonFieldRow'
 import ComparisonProductContext from '../../ComparisonProductContext'
@@ -8,7 +9,6 @@ import ComparisonContext from '../../ProductComparisonContext'
 import { splitString } from '../utils/fieldUtils'
 
 import './fieldGroup.css'
-import { ExtensionPoint } from 'vtex.render-runtime'
 
 const CSS_HANDLES = [
   'title',
