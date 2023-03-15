@@ -4499,9 +4499,9 @@ symbol-tree@^3.2.2:
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
   integrity sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==
 
-"taace8.product-comparison@http://taace8.vtexassets.com/_v/public/typings/v1/taace8.product-comparison@0.19.2/public/@types/taace8.product-comparison":
+"taace8.product-comparison@https://brunight--taace8.myvtex.com/_v/private/typings/linked/v1/taace8.product-comparison@0.19.2+build1678732550/public/@types/taace8.product-comparison":
   version "0.19.2"
-  resolved "http://taace8.vtexassets.com/_v/public/typings/v1/taace8.product-comparison@0.19.2/public/@types/taace8.product-comparison#76a39ff107fe4e11ddf6a4e1df8e22d2b13672f1"
+  resolved "https://brunight--taace8.myvtex.com/_v/private/typings/linked/v1/taace8.product-comparison@0.19.2+build1678732550/public/@types/taace8.product-comparison#f704ff890d9ad3b3e648656577b75060c9ef9514"
 
 tar@^4:
   version "4.4.10"

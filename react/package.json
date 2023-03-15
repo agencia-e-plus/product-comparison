@@ -20,7 +20,7 @@
     "@types/ramda": "^0.26.5",
     "@types/react": "^16.9.2",
     "@vtex/test-tools": "^1.1.0",
-    "taace8.product-comparison": "http://taace8.vtexassets.com/_v/public/typings/v1/taace8.product-comparison@0.19.2/public/@types/taace8.product-comparison",
+    "taace8.product-comparison": "https://brunight--taace8.myvtex.com/_v/private/typings/linked/v1/taace8.product-comparison@0.19.2+build1678732550/public/@types/taace8.product-comparison",
     "tslint-eslint-rules": "^5.4.0",
     "typescript": "3.9.7",
     "vtex.apps-graphql": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.apps-graphql@2.10.1/public/@types/vtex.apps-graphql",
