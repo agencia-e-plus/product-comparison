@@ -11,16 +11,29 @@ import ComparisonProductContext from '../../ComparisonProductContext'
 import ComparisonFieldValue from './ComparisonFieldValue'
 import './row.css'
 
-const CSS_HANDLES = ['comparisonCol']
+const CSS_HANDLES = [
+  'comparisonCol',
+  'comparisonColName',
+  'fieldNameCol',
+  'title',
+]
 
 interface Props {
   field: ComparisonField
   children: ReactChildren | ReactChild
   products: Product[]
   comparisonProducts: ProductToCompare[]
+  specName?: boolean
+  groupName?: string
 }
 
-const List = ({ children, comparisonProducts, field }: Props) => {
+const List = ({
+  children,
+  comparisonProducts,
+  field,
+  specName,
+  groupName,
+}: Props) => {
   const cssHandles = useCssHandles(CSS_HANDLES)
   const { list } = useListContext()
 
@@ -28,7 +41,20 @@ const List = ({ children, comparisonProducts, field }: Props) => {
     const componentList =
       comparisonProducts &&
       comparisonProducts.map((comparisonProduct) => {
-        return (
+        return groupName ? (
+          <div className={`${cssHandles.title} pa5 b`}>
+            <span>{groupName}</span>
+          </div>
+        ) : specName ? (
+          <div
+            key={`${comparisonProduct.productId}-col`}
+            className={`${cssHandles.comparisonColName} w-100 ma1 pa3`}
+          >
+            <div className={`${cssHandles.fieldNameCol} w-100 ma1 pa3`}>
+              <span>{field.displayValue}</span>
+            </div>
+          </div>
+        ) : (
           <div
             key={`${comparisonProduct.productId}-col`}
             className={`${cssHandles.comparisonCol} w-100 ma1 pa3`}
@@ -42,7 +68,17 @@ const List = ({ children, comparisonProducts, field }: Props) => {
       })
 
     return list.concat(componentList)
-  }, [comparisonProducts, cssHandles, field, list])
+  }, [
+    comparisonProducts,
+    cssHandles.comparisonCol,
+    cssHandles.comparisonColName,
+    cssHandles.fieldNameCol,
+    cssHandles.title,
+    field,
+    groupName,
+    list,
+    specName,
+  ])
 
   return (
     <ListContextProvider list={newListContextValue}>
@@ -51,7 +87,12 @@ const List = ({ children, comparisonProducts, field }: Props) => {
   )
 }
 
-const ComparisonGridRowContent = ({ children, field }: Props) => {
+const ComparisonGridRowContent = ({
+  children,
+  field,
+  specName,
+  groupName,
+}: Props) => {
   const { ProductListProvider } = ProductListContext
   const { useProductComparisonState } = ComparisonContext
   const { useComparisonProductState } = ComparisonProductContext
@@ -73,6 +114,8 @@ const ComparisonGridRowContent = ({ children, field }: Props) => {
         products={products}
         comparisonProducts={comparisonProducts}
         field={field}
+        specName={specName}
+        groupName={groupName}
       >
         {children}
       </List>

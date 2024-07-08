@@ -229,9 +229,9 @@ const ProductComparisonProvider = ({ children }: Props) => {
 
   useEffect(() => {
     const initialProducts = localStorage.getItem('PRODUCTS_TO_COMPARE')
-    const productsToCompare = (initialProducts
-      ? JSON.parse(initialProducts)
-      : []) as ProductToCompare[]
+    const productsToCompare = (
+      initialProducts ? JSON.parse(initialProducts) : []
+    ) as ProductToCompare[]
 
     dispatch({ type: 'ADD_ALL', args: { products: productsToCompare } })
   }, [])

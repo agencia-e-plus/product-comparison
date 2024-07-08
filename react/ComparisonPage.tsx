@@ -52,10 +52,8 @@ const messages = defineMessages({
 
 const ComparisonPage = ({ children, intl, showToast }: Props) => {
   const cssHandles = useCssHandles(CSS_HANDLES)
-  const {
-    useProductComparisonState,
-    useProductComparisonDispatch,
-  } = ComparisonContext
+  const { useProductComparisonState, useProductComparisonDispatch } =
+    ComparisonContext
 
   const comparisonData = useProductComparisonState()
   const dispatchComparison = useProductComparisonDispatch()

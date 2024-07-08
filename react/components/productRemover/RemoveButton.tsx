@@ -31,16 +31,15 @@ interface Props extends InjectedIntlProps {
 const RemoveButton = ({ showToast, intl }: Props) => {
   const cssHandles = useCssHandles(CSS_HANDLES)
 
-  const {
-    useProductComparisonState,
-    useProductComparisonDispatch,
-  } = ComparisonContext
+  const { useProductComparisonState, useProductComparisonDispatch } =
+    ComparisonContext
 
   const dispatchComparison = useProductComparisonDispatch()
   const valuesFromContext = useProductSummary()
   const productId = pathOr('', ['product', 'productId'], valuesFromContext)
   const productName = pathOr('', ['product', 'productName'], valuesFromContext)
   const itemId = pathOr('', ['selectedItem', 'itemId'], valuesFromContext)
+  const link = pathOr('', ['product', 'itemId'], valuesFromContext)
 
   const comparisonData = useProductComparisonState()
   const isDrawerCollapsed = pathOr(false, ['isDrawerCollapsed'], comparisonData)
@@ -62,6 +61,7 @@ const RemoveButton = ({ showToast, intl }: Props) => {
         product: {
           productId,
           skuId: itemId,
+          link,
         },
       },
       type: 'REMOVE',

@@ -31,6 +31,7 @@
   "store/product-comparison.product-selector.compare": "مقارنة",
   "store/product-comparison.drawer.products": "المُنتجات",
   "store/product-comparison.drawer.compare": "مقارنة",
+  "store/product-comparison.drawer.compare-cta": "مقارنة",
   "store/product-comparison.drawer.remove-all-message": "تم حذف جميع المنتجات من المقارنة",
   "store/product-comparison.drawer.remove-all": "حذف الكل",
   "store/product-comparison.drawer.hide": "إخفاء",

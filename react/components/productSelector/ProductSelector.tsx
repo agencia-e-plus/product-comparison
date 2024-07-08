@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+// eslint-disable-next-line prettier/prettier
 import type { MouseEvent } from 'react'
 import React, { useState, useEffect } from 'react'
 import { pathOr, find, propEq, allPass, isEmpty } from 'ramda'
@@ -8,6 +9,7 @@ import { useProductSummary } from 'vtex.product-summary-context/ProductSummaryCo
 import type { InjectedIntlProps } from 'react-intl'
 import { injectIntl, defineMessages } from 'react-intl'
 import { useProduct } from 'vtex.product-context'
+import { usePixel } from 'vtex.pixel-manager'
 
 import ComparisonContext from '../../ProductComparisonContext'
 
@@ -43,29 +45,33 @@ const getContextValue = (
   productContext: unknown,
   productSummaryContext: unknown
 ) => {
-  let contextValue = productSummaryContext !== undefined? productSummaryContext : productContext
-    let productId = pathOr('', ['product', 'productId'], contextValue)
-    let productName = pathOr('', ['product', 'productName'], contextValue)
-    let itemId = pathOr('', ['selectedItem', 'itemId'], contextValue)
-    return { productName, productId, itemId }
+  const contextValue =
+    productSummaryContext !== undefined ? productSummaryContext : productContext
+
+  const productId = pathOr('', ['product', 'productId'], contextValue)
+  const productName = pathOr('', ['product', 'productName'], contextValue)
+  const itemId = pathOr('', ['selectedItem', 'itemId'], contextValue)
+  const link = pathOr('', ['product', 'link'], contextValue)
+
+  return { productName, productId, itemId, link }
 }
+
 const ProductSelector = ({ showToast, intl }: Props) => {
   const cssHandles = useCssHandles(CSS_HANDLES)
   const [isChecked, setIsChecked] = useState(false)
   const valuesFromContext = useProductSummary()
   const valuesFromProductContext = useProduct()
-  const {productId, productName, itemId} = getContextValue(
+  const { productId, productName, itemId, link } = getContextValue(
     valuesFromProductContext,
     valuesFromContext
   )
-  const {
-    useProductComparisonState,
-    useProductComparisonDispatch,
-  } = ComparisonContext
+
+  const { useProductComparisonState, useProductComparisonDispatch } =
+    ComparisonContext
 
   const comparisonData = useProductComparisonState()
   const dispatchComparison = useProductComparisonDispatch()
-
+  const { push } = usePixel()
 
   const isDrawerCollapsed = pathOr(false, ['isDrawerCollapsed'], comparisonData)
   const productsSelected = pathOr([], ['products'], comparisonData)
@@ -97,11 +103,14 @@ const ProductSelector = ({ showToast, intl }: Props) => {
   const productSelectorChanged = (e: { target: { checked: boolean } }) => {
     if (e.target.checked && productsSelected.length === maxItemsToCompare) {
       setIsChecked(false)
+      push({
+        id: 'much-products',
+      })
       showMessage(`${intl.formatMessage(messages.comparisonUpperLimit)}`, true)
     } else if (e.target.checked) {
       dispatchComparison({
         args: {
-          product: { productId, skuId: itemId },
+          product: { productId, skuId: itemId, link },
         },
         type: 'ADD',
       })
@@ -114,7 +123,7 @@ const ProductSelector = ({ showToast, intl }: Props) => {
     } else {
       dispatchComparison({
         args: {
-          product: { productId, skuId: itemId },
+          product: { productId, skuId: itemId, link },
         },
         type: 'REMOVE',
       })

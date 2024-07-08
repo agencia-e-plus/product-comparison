@@ -31,6 +31,7 @@
   "store/product-comparison.product-selector.compare": "Сравнить",
   "store/product-comparison.drawer.products": "{productsLength, plural, one {товар} few {товара} many {товаров} other {товаров}}",
   "store/product-comparison.drawer.compare": "Сравнить",
+  "store/product-comparison.drawer.compare-cta": "Сравнить",
   "store/product-comparison.drawer.remove-all-message": "Все товары удалены из сравнения",
   "store/product-comparison.drawer.remove-all": "Удалить все",
   "store/product-comparison.drawer.hide": "скрыть",

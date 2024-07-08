@@ -9,6 +9,10 @@
     "component": "ProductSelector"
   },
 
+  "product-comparison-block.link": {
+    "component": "ProductLink"
+  },
+
   "product-comparison-drawer": {
     "allowed": ["list-context.comparison-product-summary-slider"],
     "component": "ComparisonDrawer"
@@ -57,5 +61,13 @@
 
   "product-summary.shelf.product-comparison": {
     "allowed": ["product-comparison-block"]
+  },
+
+  "product-comparison-remove-all": {
+    "component": "RemoveAllButton"
+  },
+
+  "product-comparison-back-button": {
+    "component": "BackButton"
   }
 }
