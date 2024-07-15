@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { contains, pathOr, keys, findLast, propEq, sort, uniq } from 'ramda' // , findLast, propEq, sort, uniq,
-import { useCssHandles } from 'vtex.css-handles'
+ 
 import { ExtensionPoint } from 'vtex.render-runtime'
 
 import ComparisonFieldRow from '../comparisonPageRow/ComparisonFieldRow'
@@ -9,6 +9,7 @@ import ComparisonContext from '../../ProductComparisonContext'
 import { splitString } from '../utils/fieldUtils'
 
 import './fieldGroup.css'
+import { useBlockClass } from '../../hooks/useBlockClass'
 
 const CSS_HANDLES = [
   'title',
@@ -29,7 +30,8 @@ const GroupedProductSpecifications = ({
   showGroupName = true,
   showSpecNameWithSpecValue = false,
 }: Props) => {
-  const cssHandles = useCssHandles(CSS_HANDLES)
+  const {handles: cssHandles} = useBlockClass(CSS_HANDLES)
+
   const { useComparisonProductState } = ComparisonProductContext
   const { useProductComparisonState } = ComparisonContext
 

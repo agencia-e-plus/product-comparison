@@ -1,10 +1,10 @@
 import React from 'react'
 import type { InjectedIntlProps } from 'react-intl'
 import { defineMessages, injectIntl } from 'react-intl'
-import { useCssHandles } from 'vtex.css-handles'
 import { Button, withToast } from 'vtex.styleguide'
 
 import ComparisonContext from './ProductComparisonContext'
+import { useBlockClass } from './hooks/useBlockClass'
 
 const CSS_HANDLES = ['removeAllItemsButtonWrapper']
 
@@ -40,7 +40,8 @@ interface Props extends InjectedIntlProps {
 }
 
 const RemoveAllButton: React.FC<Props> = ({ intl, showToast }) => {
-  const cssHandles = useCssHandles(CSS_HANDLES)
+  const {handles: cssHandles} = useBlockClass(CSS_HANDLES)
+
 
   const { useProductComparisonDispatch } = ComparisonContext
 

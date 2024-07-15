@@ -1,9 +1,10 @@
 import React from 'react'
 import { pathOr, find, propEq, findLast } from 'ramda'
-import { useCssHandles } from 'vtex.css-handles'
+ 
 
 import ComparisonProductContext from '../../ComparisonProductContext'
 import './row.css'
+import { useBlockClass } from '../../hooks/useBlockClass'
 
 const CSS_HANDLES = [
   'productFieldValue',
@@ -19,7 +20,9 @@ interface Props {
   field: ComparisonField
 }
 const ComparisonFieldValue = ({ field, productToCompare }: Props) => {
-  const cssHandles = useCssHandles(CSS_HANDLES)
+  const {handles: cssHandles} = useBlockClass(CSS_HANDLES)
+
+  
   const { useComparisonProductState } = ComparisonProductContext
   const productData = useComparisonProductState()
 

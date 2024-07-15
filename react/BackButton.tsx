@@ -1,8 +1,8 @@
 import React from 'react'
 import type { InjectedIntlProps } from 'react-intl'
 import { defineMessages, injectIntl } from 'react-intl'
-import { useCssHandles } from 'vtex.css-handles'
 import { Button } from 'vtex.styleguide'
+import { useBlockClass } from './hooks/useBlockClass'
 
 const CSS_HANDLES = ['backButtonWrapper']
 
@@ -36,7 +36,8 @@ const messages = defineMessages({
 type Props = InjectedIntlProps
 
 const RemoveAllButton: React.FC<Props> = ({ intl }) => {
-  const cssHandles = useCssHandles(CSS_HANDLES)
+  const {handles: cssHandles} = useBlockClass(CSS_HANDLES)
+
 
   const onBackButtonClick = () => {
     window.history.back()

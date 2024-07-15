@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react'
 import { withToast } from 'vtex.styleguide'
-import { useCssHandles } from 'vtex.css-handles'
+ 
 import type { InjectedIntlProps } from 'react-intl'
 import { injectIntl, defineMessages } from 'react-intl'
 import { Link } from 'vtex.render-runtime'
 
 import ComparisonContext from '../../ProductComparisonContext'
+import { useBlockClass } from '../../hooks/useBlockClass'
 
 const CSS_HANDLES = ['ProductLinkContainer', 'ProductLinkLabel']
 
@@ -21,7 +22,8 @@ interface Props extends InjectedIntlProps {
   showToast?: (input: ToastInput) => void
 }
 const ProductLink = ({ intl }: Props) => {
-  const cssHandles = useCssHandles(CSS_HANDLES)
+  const {handles: cssHandles} = useBlockClass(CSS_HANDLES)
+
   const { useProductComparisonState } = ComparisonContext
 
   const { products } = useProductComparisonState()

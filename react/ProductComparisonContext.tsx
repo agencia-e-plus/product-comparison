@@ -2,6 +2,7 @@ import type { ReactChildren, ReactChild } from 'react'
 import React, { useReducer, useContext, createContext, useEffect } from 'react'
 import { pathOr, reject, propEq, allPass } from 'ramda'
 import { useQuery } from 'react-apollo'
+import { useDevice } from 'vtex.device-detector'
 
 import AppSettings from './queries/AppSettings.graphql'
 
@@ -201,6 +202,7 @@ interface Props {
 
 const ProductComparisonProvider = ({ children }: Props) => {
   const [state, dispatch] = useReducer(listReducer, initialState)
+  const { isMobile } = useDevice()
 
   const { data: appSettingsData } = useQuery(AppSettings, {
     variables: {
@@ -218,11 +220,17 @@ const ProductComparisonProvider = ({ children }: Props) => {
     dispatch({
       type: 'SET_MAX_LIMIT',
       args: {
-        maxLimit: pathOr(
-          MAX_ITEMS_TO_COMPARE,
-          ['maxNumberOfItemsToCompare'],
-          appSettings
-        ),
+        maxLimit: isMobile
+          ? pathOr(
+              MAX_ITEMS_TO_COMPARE,
+              ['maxNumberOfItemsToCompareOnMobile'],
+              appSettings
+            )
+          : pathOr(
+              MAX_ITEMS_TO_COMPARE,
+              ['maxNumberOfItemsToCompare'],
+              appSettings
+            ),
       },
     })
   }, [appSettingsData])

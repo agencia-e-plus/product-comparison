@@ -4,6 +4,9 @@
 .compareProductsButton {
 }
 
+.drawerContentWrapper {
+}
+
 .drawerContainer {
   position: fixed;
   max-height: 500px;

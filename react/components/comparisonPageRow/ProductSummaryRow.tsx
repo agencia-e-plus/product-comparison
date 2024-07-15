@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { pathOr, isEmpty } from 'ramda'
 import { ExtensionPoint } from 'vtex.render-runtime'
-import { useCssHandles } from 'vtex.css-handles'
+ 
 import { Checkbox } from 'vtex.styleguide'
 
 import ComparisonProductContext from '../../ComparisonProductContext'
@@ -13,6 +13,7 @@ import { injectIntl, defineMessages } from 'react-intl'
 
 import ComparisonContext from '../../ProductComparisonContext'
 import type { Dispatch } from '../../ProductComparisonContext'
+import { useBlockClass } from '../../hooks/useBlockClass'
 
 interface ProductSummaryRowProps extends InjectedIntlProps {
   isShowDifferenceDefault: boolean
@@ -47,7 +48,9 @@ const ProductSummaryRow = ({
   isShowDifferenceDefault,
   intl,
 }: ProductSummaryRowProps) => {
-  const cssHandles = useCssHandles(CSS_HANDLES)
+
+  const {handles: cssHandles} = useBlockClass(CSS_HANDLES)
+
 
   const [isShowDifferenceByDefault, changesChecked] = useState(
     isShowDifferenceDefault

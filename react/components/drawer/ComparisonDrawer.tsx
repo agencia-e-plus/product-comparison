@@ -4,7 +4,6 @@ import React from 'react'
 import { pathOr, isEmpty } from 'ramda'
 import { Button, Collapsible, withToast } from 'vtex.styleguide'
 import { ExtensionPoint, useRuntime } from 'vtex.render-runtime'
-import { useCssHandles } from 'vtex.css-handles'
 import type { InjectedIntlProps } from 'react-intl'
 import { injectIntl, defineMessages } from 'react-intl'
 
@@ -12,6 +11,8 @@ import ComparisonContext from '../../ProductComparisonContext'
 
 import './drawer.css'
 import { usePixel } from 'vtex.pixel-manager'
+
+import { useBlockClass } from '../../hooks/useBlockClass'
 
 const CSS_HANDLES = [
   'drawerContainer',
@@ -27,6 +28,7 @@ const CSS_HANDLES = [
   'drawerTitleInnerContainer',
   'drawerOpened',
   'drawerClosed',
+  'drawerContentWrapper',
 ]
 
 const messages = defineMessages({
@@ -84,7 +86,8 @@ const ComparisonDrawer = ({
   comparisonPageUrl,
   showIfEmpty,
 }: Props) => {
-  const cssHandles = useCssHandles(CSS_HANDLES)
+  const { handles: cssHandles } = useBlockClass(CSS_HANDLES)
+
   const { navigate } = useRuntime()
   // const [isCollapsed, setCollapsed] = useState(false)
   const { useProductComparisonState, useProductComparisonDispatch } =
@@ -168,7 +171,7 @@ const ComparisonDrawer = ({
           isCollapsed ? cssHandles.drawerClosed : cssHandles.drawerOpened
         } bg-white w-100 bt-ns b--light-gray flex justify-center`}
       >
-        <div className="mw9 w-100 ">
+        <div className={`mw9 w-100 ${cssHandles.drawerContentWrapper}`}>
           <Collapsible
             header={
               <div
@@ -212,38 +215,37 @@ const ComparisonDrawer = ({
                     {intl.formatMessage(messages.removeAll)}
                   </Button>
                 </div>
-                <div
-                  className={`flex mr2 ml2 ${
-                    cssHandles.compareProductButtonWrapper
-                  } ${
-                    comparisonProducts.length < 2
-                      ? cssHandles.compareProductsButtonNotMinProduct
-                      : ' '
-                  }`}
-                  onClick={
-                    !comparisonProducts.length ? () => {} : onClickCompare
-                  }
-                >
-                  <Button
-                    block
-                    size="small"
-                    className={`${cssHandles.compareProductsButton} ma3 `}
-                    onClick={navigateToComparisonPage}
-                    disabled={!comparisonProducts.length}
-                  >
-                    {intl.formatMessage(messages.compareCTA)}
-                  </Button>
-                </div>
               </div>
             }
             isOpen={!isCollapsed}
           >
             <div
               className={`${cssHandles.drawer} flex flex-row justify-center pl3 pr3`}
+              data-open={!isCollapsed}
             >
               <ExtensionPoint id="list-context.comparison-product-summary-slider" />
             </div>
           </Collapsible>
+          <div
+            className={`flex mr2 ml2 ${
+              cssHandles.compareProductButtonWrapper
+            } ${
+              comparisonProducts.length < 2
+                ? cssHandles.compareProductsButtonNotMinProduct
+                : ' '
+            }`}
+            onClick={!comparisonProducts.length ? () => {} : onClickCompare}
+          >
+            <Button
+              block
+              size="small"
+              className={`${cssHandles.compareProductsButton} ma3 `}
+              onClick={navigateToComparisonPage}
+              disabled={!comparisonProducts.length}
+            >
+              {intl.formatMessage(messages.compareCTA)}
+            </Button>
+          </div>
         </div>
       </div>
     </>

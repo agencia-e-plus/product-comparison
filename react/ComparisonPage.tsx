@@ -1,7 +1,6 @@
 import type { ReactChild, ReactChildren } from 'react'
 import React from 'react'
 import { isEmpty, pathOr } from 'ramda'
-import { useCssHandles } from 'vtex.css-handles'
 import {
   Button,
   Layout,
@@ -15,6 +14,7 @@ import { defineMessages, injectIntl } from 'react-intl'
 
 import ComparisonContext from './ProductComparisonContext'
 import './global.css'
+import { useBlockClass } from './hooks/useBlockClass'
 
 const CSS_HANDLES = ['pageContainer', 'sortBy', 'removeAllItemsButtonWrapper']
 
@@ -51,7 +51,8 @@ const messages = defineMessages({
 })
 
 const ComparisonPage = ({ children, intl, showToast }: Props) => {
-  const cssHandles = useCssHandles(CSS_HANDLES)
+  const {handles: cssHandles} = useBlockClass(CSS_HANDLES)
+
   const { useProductComparisonState, useProductComparisonDispatch } =
     ComparisonContext
 

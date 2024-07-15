@@ -1,7 +1,8 @@
 import React from 'react'
 import { ExtensionPoint } from 'vtex.render-runtime'
-import { useCssHandles } from 'vtex.css-handles'
+ 
 import './row.css'
+import { useBlockClass } from '../../hooks/useBlockClass'
 
 const CSS_HANDLES = ['rowContainer', 'fieldNameCol']
 
@@ -15,7 +16,8 @@ const ComparisonFieldRow: StorefrontFunctionComponent<Props> = ({
   field,
   showSpecNameWithSpecValue,
 }: Props) => {
-  const cssHandles = useCssHandles(CSS_HANDLES)
+  const {handles: cssHandles} = useBlockClass(CSS_HANDLES)
+
 
   return field && field.name && field.fieldType && field.showOnSite ? (
     <>
@@ -33,10 +35,11 @@ const ComparisonFieldRow: StorefrontFunctionComponent<Props> = ({
       )}
       <div
         className={`${cssHandles.rowContainer} flex flex-row`}
+        data-spec={field.displayValue}
         key={`field-${field.name}`}
       >
         {!showSpecNameWithSpecValue && (
-          <div className={`${cssHandles.fieldNameCol} w-100 ma1 pa3`}>
+          <div className={`${cssHandles.fieldNameCol} w-100 ma1 pa3`} data-spec={field.displayValue}>
             <span>{field.displayValue}</span>
           </div>
         )}

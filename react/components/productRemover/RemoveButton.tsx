@@ -2,7 +2,7 @@ import type { MouseEvent } from 'react'
 import React from 'react'
 import { pathOr } from 'ramda'
 import { useProductSummary } from 'vtex.product-summary-context/ProductSummaryContext'
-import { useCssHandles } from 'vtex.css-handles'
+ 
 import { withToast } from 'vtex.styleguide'
 import { IconClose } from 'vtex.store-icons'
 import type { InjectedIntlProps } from 'react-intl'
@@ -10,6 +10,7 @@ import { injectIntl, defineMessages } from 'react-intl'
 
 import ComparisonContext from '../../ProductComparisonContext'
 import './remove.css'
+import { useBlockClass } from '../../hooks/useBlockClass'
 
 const CSS_HANDLES = ['closeButton', 'closeButtonContainer']
 
@@ -29,7 +30,7 @@ interface Props extends InjectedIntlProps {
 }
 
 const RemoveButton = ({ showToast, intl }: Props) => {
-  const cssHandles = useCssHandles(CSS_HANDLES)
+  const {handles: cssHandles} = useBlockClass(CSS_HANDLES)
 
   const { useProductComparisonState, useProductComparisonDispatch } =
     ComparisonContext

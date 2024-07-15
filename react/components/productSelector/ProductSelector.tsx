@@ -4,7 +4,7 @@ import type { MouseEvent } from 'react'
 import React, { useState, useEffect } from 'react'
 import { pathOr, find, propEq, allPass, isEmpty } from 'ramda'
 import { Checkbox, withToast } from 'vtex.styleguide'
-import { useCssHandles } from 'vtex.css-handles'
+ 
 import { useProductSummary } from 'vtex.product-summary-context/ProductSummaryContext'
 import type { InjectedIntlProps } from 'react-intl'
 import { injectIntl, defineMessages } from 'react-intl'
@@ -12,6 +12,7 @@ import { useProduct } from 'vtex.product-context'
 import { usePixel } from 'vtex.pixel-manager'
 
 import ComparisonContext from '../../ProductComparisonContext'
+import { useBlockClass } from '../../hooks/useBlockClass'
 
 const CSS_HANDLES = ['productSelectorContainer']
 
@@ -57,7 +58,8 @@ const getContextValue = (
 }
 
 const ProductSelector = ({ showToast, intl }: Props) => {
-  const cssHandles = useCssHandles(CSS_HANDLES)
+  const {handles: cssHandles} = useBlockClass(CSS_HANDLES)
+
   const [isChecked, setIsChecked] = useState(false)
   const valuesFromContext = useProductSummary()
   const valuesFromProductContext = useProduct()

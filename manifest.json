@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "vtex.styleguide": "9.x",
-    "vtex.css-handles": "0.x",
+    "vtex.css-handles": "1.x",
     "vtex.store-graphql": "2.x",
     "vtex.product-summary-context": "0.x",
     "vtex.product-summary": "2.x",
@@ -30,7 +30,8 @@
     "vtex.flex-layout": "0.x",
     "vtex.pixel-manager": "1.x",
     "vtex.apps-graphql": "3.x",
-    "vtex.product-context": "0.x"
+    "vtex.product-context": "0.x",
+    "vtex.device-detector": "0.x"
   },
   "settingsSchema": {
     "access": "public",
@@ -39,6 +40,11 @@
     "properties": {
       "maxNumberOfItemsToCompare": {
         "title": "Comparison bucket upper limit",
+        "description": "Maximum number of items to compare. Default value is 10",
+        "type": "number"
+      },
+      "maxNumberOfItemsToCompareOnMobile": {
+        "title": "Comparison bucket upper limit on phone",
         "description": "Maximum number of items to compare. Default value is 10",
         "type": "number"
       }

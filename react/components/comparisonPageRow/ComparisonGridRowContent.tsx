@@ -3,13 +3,14 @@ import React, { useMemo } from 'react'
 import { pathOr } from 'ramda'
 import { useListContext, ListContextProvider } from 'vtex.list-context'
 import { ProductListContext } from 'vtex.product-list-context'
-import { useCssHandles } from 'vtex.css-handles'
+
 
 import ProductSummeryListEventCaller from '../productSummaryList/ProductSummeryListEventCaller'
 import ComparisonContext from '../../ProductComparisonContext'
 import ComparisonProductContext from '../../ComparisonProductContext'
 import ComparisonFieldValue from './ComparisonFieldValue'
 import './row.css'
+import { useBlockClass } from '../../hooks/useBlockClass'
 
 const CSS_HANDLES = [
   'comparisonCol',
@@ -34,7 +35,7 @@ const List = ({
   specName,
   groupName,
 }: Props) => {
-  const cssHandles = useCssHandles(CSS_HANDLES)
+  const {handles: cssHandles} = useBlockClass(CSS_HANDLES)
   const { list } = useListContext()
 
   const newListContextValue = useMemo(() => {
@@ -48,9 +49,10 @@ const List = ({
         ) : specName ? (
           <div
             key={`${comparisonProduct.productId}-col`}
+            data-spec={field.displayValue}
             className={`${cssHandles.comparisonColName} w-100 ma1 pa3`}
           >
-            <div className={`${cssHandles.fieldNameCol} w-100 ma1 pa3`}>
+            <div className={`${cssHandles.fieldNameCol} w-100 ma1 pa3`} data-spec={field.displayValue}>
               <span>{field.displayValue}</span>
             </div>
           </div>
